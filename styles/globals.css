@@ -25,7 +25,7 @@
     appearance: none;
     width: theme('spacing.4');
     height: theme('spacing.4');
-    background: theme('colors.rose.500');
+    background: theme('colors.yellow.400');
     border-radius: theme('borderRadius.full');
     cursor: pointer;
   }
@@ -33,7 +33,7 @@
   .slider::-moz-range-thumb {
     width: theme('spacing.4');
     height: theme('spacing.4');
-    background: theme('colors.rose.500');
+    background: theme('colors.yellow.400');
     cursor: pointer;
   }
 }

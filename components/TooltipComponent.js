@@ -5,8 +5,8 @@ export default function TooltipComponent({ id }) {
     <Tooltip
       id={id}
       style={{
-        backgroundColor: '#bae6fd',
-        color: '#075985',
+        backgroundColor: '#facc15',
+        color: '#1f2937',
         opacity: 0.9,
         fontSize: '1rem',
       }}
