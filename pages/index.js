@@ -3,8 +3,6 @@ import Head from 'next/head';
 import Toolbar from '../components/Toolbar';
 import ToolbarMobile from '../components/ToolbarMobile';
 
-import 'react-tooltip/dist/react-tooltip.css';
-
 const startColor = {
   r: '250',
   g: '204',
@@ -192,7 +190,7 @@ export default function Home() {
     );
     restoreCanvas(savedCanvas.data);
     setIsErasing(false);
-  }, [savedCanvas]);
+  }, [savedCanvas, restoreCanvas]);
 
   // Update brush size and color
   useEffect(() => {
@@ -201,7 +199,7 @@ export default function Home() {
 
     context.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
     context.lineWidth = brushSize;
-  }, [color, brushSize]);
+  }, [brushSize, color.a, color.b, color.g, color.r]);
 
   // Create initial canvas
   useEffect(() => {

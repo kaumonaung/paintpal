@@ -3,15 +3,13 @@ import {
   BsBrushFill,
   BsPaintBucket,
   BsEraserFill,
-  BsArrowCounterclockwise,
   BsDownload,
   BsUpload,
   BsTrash2Fill,
   BsFillImageFill,
 } from 'react-icons/bs';
+import { RiPaintBrushFill } from 'react-icons/ri';
 import { SketchPicker } from 'react-color';
-
-import Tooltip from './TooltipComponent';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -50,59 +48,42 @@ export default function ToolbarMobile(props) {
     <div className="bg-gray-800">
       <div className="flex flex-col space-y-2 py-3 px-2 sm:hidden">
         <div className="flex flex-row justify-between">
-          <span
-            className="inline-flex items-center rounded-full my-1 bg-yellow-600 px-3 py-0.5 text-sm font-medium text-white mr-1"
-            data-tooltip-id="current-selection"
-            data-tooltip-content="Current Selection"
-          >
+          <span className="my-1 mr-1 inline-flex items-center rounded-full bg-yellow-600 px-3 py-0.5 text-sm font-medium text-white">
             {activeToolEl}
           </span>
-          <Tooltip id="current-selection" />
 
           <div className="flex items-center space-x-2">
             <button
               type="button"
-              className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              data-tooltip-id="save"
-              data-tooltip-content="Save to Local Storage"
+              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               onClick={() => saveToLocalStorage()}
             >
               <BsUpload className="m-auto h-5 w-5" />
-              <Tooltip id="save" />
             </button>
 
             <button
               type="button"
-              className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              data-tooltip-id="load"
-              data-tooltip-content="Load from Local Storage"
+              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               onClick={() => loadFromLocalStorage()}
             >
               <BsDownload className="m-auto h-5 w-5" />
-              <Tooltip id="load" />
             </button>
 
             <a
-              className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 flex items-center justify-center"
-              data-tooltip-id="export"
-              data-tooltip-content="Export as JPG"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               ref={exportRef}
               onClick={() => exportAsJPG()}
               href=""
             >
               <BsFillImageFill className="h-5 w-5" />
-              <Tooltip id="export" />
             </a>
 
             <button
               type="button"
-              className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              data-tooltip-id="delete"
-              data-tooltip-content="Delete Saved Canvas"
+              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               onClick={() => deleteFromLocalStorage()}
             >
               <BsTrash2Fill className="m-auto h-5 w-5" />
-              <Tooltip id="delete" />
             </button>
           </div>
         </div>
@@ -110,11 +91,11 @@ export default function ToolbarMobile(props) {
         <div className="flex flex-row space-x-2">
           <button
             type="button"
-            className="p-[4px] w-12 my-2 mx-auto bg-white rounded-sm shadow-sm cursor-pointer"
+            className="my-2 mx-auto w-12 cursor-pointer rounded-sm bg-white p-[4px] shadow-sm"
             onClick={() => setShowColor(!showColor)}
           >
             <div
-              className="w-full h-full rounded-sm"
+              className="h-full w-full rounded-sm"
               style={{ backgroundColor: rgba }}
             />
           </button>
@@ -137,16 +118,13 @@ export default function ToolbarMobile(props) {
             type="button"
             className={classNames(
               isErasing
-                ? 'bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-700'
+                ? 'bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white'
                 : 'bg-yellow-500 text-white',
-              'rounded-full h-10 w-10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+              'h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
             )}
-            data-tooltip-id="brush"
-            data-tooltip-content="Brush"
             onClick={() => selectBrush()}
           >
             <BsBrushFill className="m-auto h-5 w-5" />
-            <Tooltip id="brush" />
           </button>
 
           <div className="flex items-center">
@@ -154,26 +132,20 @@ export default function ToolbarMobile(props) {
               type="range"
               value={brushSize}
               className="slider"
-              data-tooltip-id="brush-size"
-              data-tooltip-content="Brush Size"
               onChange={(e) => handleBrushSize(e)}
             />
-            <Tooltip id="brush-size" />
           </div>
 
           <div className="flex items-center text-gray-300">
-            <span className="text-sm font-medium mx-auto w-6">{brushSize}</span>
+            <span className="mx-auto w-6 text-sm font-medium">{brushSize}</span>
           </div>
 
           <button
             type="button"
-            className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            data-tooltip-id="fill"
-            data-tooltip-content="Fill"
+            className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             onClick={() => fill()}
           >
             <BsPaintBucket className="m-auto h-5 w-5" />
-            <Tooltip id="fill" />
           </button>
 
           <button
@@ -181,26 +153,20 @@ export default function ToolbarMobile(props) {
             className={classNames(
               isErasing
                 ? 'bg-yellow-500 text-white'
-                : 'bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-700',
-              'rounded-full h-10 w-10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                : 'bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white',
+              'h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
             )}
-            data-tooltip-id="erase"
-            data-tooltip-content="Eraser"
             onClick={() => erase()}
           >
             <BsEraserFill className="m-auto h-5 w-5" />
-            <Tooltip id="erase" />
           </button>
 
           <button
             type="button"
-            className="rounded-full bg-gray-900 h-10 w-10 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            data-tooltip-id="clear"
-            data-tooltip-content="Clear Canvas"
+            className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             onClick={() => clearCanvas()}
           >
-            <BsArrowCounterclockwise className="m-auto h-5 w-5" />
-            <Tooltip id="clear" />
+            <RiPaintBrushFill className="m-auto h-5 w-5" />
           </button>
         </div>
       </div>
