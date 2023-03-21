@@ -148,34 +148,6 @@ export default function Home() {
     setBackgroundColor('rgba(255, 255, 255, 1)');
   };
 
-  const saveToLocalStorage = () => {
-    localStorage.setItem(
-      'savedCanvas',
-      JSON.stringify({
-        bg: backgroundColor,
-        data: history,
-      })
-    );
-
-    setActiveToolEl('Canvas saved');
-    setIsErasing(false);
-  };
-
-  const loadFromLocalStorage = () => {
-    if (localStorage.getItem('savedCanvas')) {
-      setSavedCanvas(JSON.parse(localStorage.savedCanvas));
-    } else {
-      setActiveToolEl('No canvas found');
-    }
-    setIsErasing(false);
-  };
-
-  const deleteFromLocalStorage = () => {
-    localStorage.removeItem('savedCanvas');
-    setActiveToolEl('Canvas deleted');
-    setIsErasing(false);
-  };
-
   // ====================== useEffects ======================
 
   // Restore canvas load from local storage
@@ -235,42 +207,43 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Toolbar
-        {...{
-          canvasRef,
-          activeToolEl,
-          color,
-          setColor,
-          showColor,
-          setShowColor,
-          selectBrush,
-          brushSize,
-          handleBrushSize,
-          fill,
-          erase,
-          isErasing,
-          clearCanvas,
-        }}
-      />
-      <ToolbarMobile
-        {...{
-          canvasRef,
-          activeToolEl,
-          color,
-          setColor,
-          showColor,
-          setShowColor,
-          selectBrush,
-          brushSize,
-          handleBrushSize,
-          fill,
-          erase,
-          isErasing,
-          clearCanvas,
-        }}
-      />
-
       <main>
+        <Toolbar
+          {...{
+            canvasRef,
+            activeToolEl,
+            color,
+            setColor,
+            showColor,
+            setShowColor,
+            selectBrush,
+            brushSize,
+            handleBrushSize,
+            fill,
+            erase,
+            isErasing,
+            clearCanvas,
+          }}
+        />
+
+        <ToolbarMobile
+          {...{
+            canvasRef,
+            activeToolEl,
+            color,
+            setColor,
+            showColor,
+            setShowColor,
+            selectBrush,
+            brushSize,
+            handleBrushSize,
+            fill,
+            erase,
+            isErasing,
+            clearCanvas,
+          }}
+        />
+
         <canvas
           className="cursor-crosshair bg-white"
           ref={canvasRef}
