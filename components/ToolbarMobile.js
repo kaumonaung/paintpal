@@ -3,9 +3,6 @@ import {
   BsBrushFill,
   BsPaintBucket,
   BsEraserFill,
-  BsDownload,
-  BsUpload,
-  BsTrash2Fill,
   BsFillImageFill,
 } from 'react-icons/bs';
 import { RiPaintBrushFill } from 'react-icons/ri';
@@ -30,9 +27,6 @@ export default function ToolbarMobile(props) {
     erase,
     isErasing,
     clearCanvas,
-    saveToLocalStorage,
-    loadFromLocalStorage,
-    deleteFromLocalStorage,
   } = props;
 
   const rgba = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
@@ -48,43 +42,23 @@ export default function ToolbarMobile(props) {
     <div className="bg-gray-800">
       <div className="flex flex-col space-y-2 py-3 px-2 sm:hidden">
         <div className="flex flex-row justify-between">
-          <span className="my-1 mr-1 inline-flex items-center rounded-full bg-yellow-600 px-3 py-0.5 text-sm font-medium text-white">
+          <span
+            className="my-1 mr-1 inline-flex items-center rounded-full bg-yellow-600 px-3 py-0.5 text-sm font-medium text-white"
+            title="Current Selection"
+          >
             {activeToolEl}
           </span>
 
           <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => saveToLocalStorage()}
-            >
-              <BsUpload className="m-auto h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => loadFromLocalStorage()}
-            >
-              <BsDownload className="m-auto h-5 w-5" />
-            </button>
-
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               ref={exportRef}
-              onClick={() => exportAsJPG()}
               href=""
+              title="Export as JPG"
+              onClick={() => exportAsJPG()}
             >
               <BsFillImageFill className="h-5 w-5" />
             </a>
-
-            <button
-              type="button"
-              className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => deleteFromLocalStorage()}
-            >
-              <BsTrash2Fill className="m-auto h-5 w-5" />
-            </button>
           </div>
         </div>
 
@@ -92,6 +66,7 @@ export default function ToolbarMobile(props) {
           <button
             type="button"
             className="my-2 mx-auto w-12 cursor-pointer rounded-sm bg-white p-[4px] shadow-sm"
+            title="Select Color"
             onClick={() => setShowColor(!showColor)}
           >
             <div
@@ -122,6 +97,7 @@ export default function ToolbarMobile(props) {
                 : 'bg-yellow-500 text-white',
               'h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
             )}
+            title="Brush"
             onClick={() => selectBrush()}
           >
             <BsBrushFill className="m-auto h-5 w-5" />
@@ -133,16 +109,23 @@ export default function ToolbarMobile(props) {
               value={brushSize}
               className="slider"
               onChange={(e) => handleBrushSize(e)}
+              title="Brush Size"
             />
           </div>
 
           <div className="flex items-center text-gray-300">
-            <span className="mx-auto w-6 text-sm font-medium">{brushSize}</span>
+            <span
+              className="mx-auto w-6 text-sm font-medium"
+              title="Brush Size"
+            >
+              {brushSize}
+            </span>
           </div>
 
           <button
             type="button"
             className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            title="Fill Canvas"
             onClick={() => fill()}
           >
             <BsPaintBucket className="m-auto h-5 w-5" />
@@ -156,6 +139,7 @@ export default function ToolbarMobile(props) {
                 : 'bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white',
               'h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
             )}
+            title="Eraser"
             onClick={() => erase()}
           >
             <BsEraserFill className="m-auto h-5 w-5" />
@@ -164,6 +148,7 @@ export default function ToolbarMobile(props) {
           <button
             type="button"
             className="h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            title="Clear Canvas"
             onClick={() => clearCanvas()}
           >
             <RiPaintBrushFill className="m-auto h-5 w-5" />

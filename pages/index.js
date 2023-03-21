@@ -250,9 +250,6 @@ export default function Home() {
           erase,
           isErasing,
           clearCanvas,
-          saveToLocalStorage,
-          loadFromLocalStorage,
-          deleteFromLocalStorage,
         }}
       />
       <ToolbarMobile
@@ -270,15 +267,12 @@ export default function Home() {
           erase,
           isErasing,
           clearCanvas,
-          saveToLocalStorage,
-          loadFromLocalStorage,
-          deleteFromLocalStorage,
         }}
       />
 
       <main>
         <canvas
-          className="cursor-crosshair"
+          className="cursor-crosshair bg-white"
           ref={canvasRef}
           onMouseDown={startDrawing}
           onMouseUp={finishDrawing}

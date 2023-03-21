@@ -1,17 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import {
   BsBrushFill,
   BsPaintBucket,
   BsEraserFill,
-  BsDownload,
-  BsUpload,
-  BsTrash2Fill,
   BsFillImageFill,
 } from 'react-icons/bs';
 import { RiPaintBrushFill } from 'react-icons/ri';
 
 import { SketchPicker } from 'react-color';
-import Tooltip from './Tooltip';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -32,33 +28,7 @@ export default function Toolbar(props) {
     erase,
     isErasing,
     clearCanvas,
-    saveToLocalStorage,
-    loadFromLocalStorage,
-    deleteFromLocalStorage,
   } = props;
-
-  const [toolState, setBtnState] = useState({
-    showTooltip: false,
-    toolId: '',
-  });
-
-  const handleMouseEnter = (toolId) => {
-    setTimeout(() => {
-      setBtnState((prevState) => ({
-        ...prevState,
-        showTooltip: true,
-        toolId,
-      }));
-    }, 200);
-  };
-
-  const handleMouseLeave = () => {
-    setBtnState((prevState) => ({
-      ...prevState,
-      showTooltip: false,
-      toolId: '',
-    }));
-  };
 
   const rgba = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
@@ -78,20 +48,15 @@ export default function Toolbar(props) {
               <div className="flex space-x-2">
                 <span
                   className="relative my-1 mr-1 inline-flex items-center rounded-full bg-yellow-600 px-3 py-0.5 text-sm font-medium text-white"
-                  onMouseEnter={() => handleMouseEnter('current-selection')}
-                  onMouseLeave={handleMouseLeave}
+                  title="Current Selection"
                 >
                   {activeToolEl}
-                  <Tooltip
-                    id="current-selection"
-                    text="Current Selection"
-                    state={toolState}
-                  />
                 </span>
 
                 <button
                   type="button"
                   className="my-2 mx-auto w-12 cursor-pointer rounded-sm bg-white p-[4px] shadow-sm"
+                  title="Select Color"
                   onClick={() => setShowColor(!showColor)}
                 >
                   <div
@@ -122,12 +87,10 @@ export default function Toolbar(props) {
                       : 'bg-yellow-500 text-white',
                     'relative h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                   )}
+                  title="Brush"
                   onClick={() => selectBrush()}
-                  onMouseEnter={() => handleMouseEnter('btn-brush')}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <BsBrushFill className="m-auto h-5 w-5" />
-                  <Tooltip id="btn-brush" text="Brush" state={toolState} />
                 </button>
 
                 <div className="relative flex items-center">
@@ -135,19 +98,16 @@ export default function Toolbar(props) {
                     type="range"
                     value={brushSize}
                     className="slider"
+                    title="Brush Size"
                     onChange={(e) => handleBrushSize(e)}
-                    onMouseEnter={() => handleMouseEnter('brush-size')}
-                    onMouseLeave={handleMouseLeave}
-                  />
-                  <Tooltip
-                    id="brush-size"
-                    text="Brush Size"
-                    state={toolState}
                   />
                 </div>
 
                 <div className="flex items-center text-gray-300">
-                  <span className="mx-auto w-6 text-sm font-medium">
+                  <span
+                    className="mx-auto w-6 text-sm font-medium"
+                    title="Brush Size"
+                  >
                     {brushSize}
                   </span>
                 </div>
@@ -155,12 +115,10 @@ export default function Toolbar(props) {
                 <button
                   type="button"
                   className="relative h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  title="Fill Canvas"
                   onClick={() => fill()}
-                  onMouseEnter={() => handleMouseEnter('btn-fill')}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <BsPaintBucket className="m-auto h-5 w-5" />
-                  <Tooltip id="btn-fill" text="Fill Canvas" state={toolState} />
                 </button>
 
                 <button
@@ -171,85 +129,34 @@ export default function Toolbar(props) {
                       : 'bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white',
                     'relative h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                   )}
+                  title="Eraser"
                   onClick={() => erase()}
-                  onMouseEnter={() => handleMouseEnter('btn-erase')}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <BsEraserFill className="m-auto h-5 w-5" />
-                  <Tooltip id="btn-erase" text="Eraser" state={toolState} />
                 </button>
 
                 <button
                   type="button"
                   className="relative h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  title="Clear Canvas"
                   onClick={() => clearCanvas()}
-                  onMouseEnter={() => handleMouseEnter('clear-canvas')}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <RiPaintBrushFill className="m-auto h-5 w-5" />
-                  <Tooltip
-                    id="clear-canvas"
-                    text="Clear Canvas"
-                    state={toolState}
-                  />
                 </button>
               </div>
             </div>
           </div>
 
           <div className="absolute inset-y-0 right-0 hidden items-center gap-x-2 pr-2 sm:static sm:inset-auto sm:ml-6 sm:flex sm:pr-0">
-            <button
-              type="button"
-              className="relative h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => saveToLocalStorage()}
-              onMouseEnter={() => handleMouseEnter('save-to-local-storage')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <BsUpload className="m-auto h-5 w-5" />
-              <Tooltip
-                id="save-to-local-storage"
-                text="Save"
-                state={toolState}
-              />
-            </button>
-
-            <button
-              type="button"
-              className="relative h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => loadFromLocalStorage()}
-              onMouseEnter={() => handleMouseEnter('load-from-local-storage')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <BsDownload className="m-auto h-5 w-5" />
-              <Tooltip
-                id="load-from-local-storage"
-                text="Load"
-                state={toolState}
-              />
-            </button>
-
             <a
               className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               ref={exportRef}
-              onClick={() => exportAsJPG()}
               href=""
-              onMouseEnter={() => handleMouseEnter('export')}
-              onMouseLeave={handleMouseLeave}
+              title="Export as JPG"
+              onClick={() => exportAsJPG()}
             >
               <BsFillImageFill className="h-5 w-5" />
-              <Tooltip id="export" text="Export" state={toolState} />
             </a>
-
-            <button
-              type="button"
-              className="relative h-10 w-10 rounded-full bg-gray-900 text-gray-300 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => deleteFromLocalStorage()}
-              onMouseEnter={() => handleMouseEnter('delete')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <BsTrash2Fill className="m-auto h-5 w-5" />
-              <Tooltip id="delete" text="Delete" state={toolState} />
-            </button>
           </div>
         </div>
       </div>
